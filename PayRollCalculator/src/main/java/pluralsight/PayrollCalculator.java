@@ -36,9 +36,10 @@ public class PayrollCalculator {
                 double hoursWorked = Double.parseDouble(tokens[2]);
                 double payRate = Double.parseDouble(tokens[3]);
 
-                Employee emp1 = new Employee(id, name, hoursWorked, payRate);
+                Employee emp = new Employee(id, name, hoursWorked, payRate);
+                employees.add(emp);
                 System.out.printf("ID: %d | Name: %s | Gross Pay: $%.2f%n",
-                        emp1.getEmployeeId(), emp1.getName(), emp1.calculateGrossPay());
+                        emp.getEmployeeId(), emp.getName(), emp.calculateGrossPay());
             }
 
             }
@@ -47,13 +48,23 @@ public class PayrollCalculator {
             System.out.println("Could not read the file.");
         }
 
+        System.out.println("\n ------ All Employee Info -------");
+        for (Employee emp : employees) {
+            System.out.printf("ID: %d | Name: %s | Hours: %.2f | Rate: %.2f | Gross Pay: $%.2f%n",
+                    emp.getEmployeeId(),
+                    emp.getName(),
+                    emp.getHoursWorked(),
+                    emp.getPayRate(),
+                    emp.calculateGrossPay());
+        }
+
 
         // Write payroll data
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
             if (outputFile.endsWith(".csv")) {
                 writer.write("id|name|gross pay\n");
                 for (Employee emp : employees) {
-                    writer.write(emp.getEmployeeId() + emp.getName() + "|" +
+                    writer.write(emp.getEmployeeId() + "|" +  emp.getName() + "|" +
                             String.format("%.2f", emp.calculateGrossPay()) + "\n");
                 }
             }
@@ -65,34 +76,6 @@ public class PayrollCalculator {
         sc.close();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
 
 }
