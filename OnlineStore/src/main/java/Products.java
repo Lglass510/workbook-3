@@ -12,18 +12,20 @@ public class Products {
     double price;
     String department;
 
-    public static void main(String[] args) {
+    public static void displayProducts(String filename) {
+
 
         try {
 
         /*Using file input stream to point to a specific file
         than creating my scanner to reference the file I want read
          */
-            FileInputStream fis = new FileInputStream("products.csv");
+            FileInputStream fis = new FileInputStream("src\\main\\resources\\products.csv");
             Scanner sc = new Scanner(fis);
             String input;
 
-            //Read the file separate the lines and display the input
+            /*Read all data in file and
+            separate the lines and display the input*/
             while (sc.hasNextLine()) {
                 input = sc.nextLine();
                 System.out.println(input);
@@ -36,8 +38,21 @@ public class Products {
             System.out.println("Unable to read file");
         }
 
+    }
+
+    public static void main(String[] args) {
+        displayProducts("products.csv");
 
     }
+
+
+
+
+
+
+
+
+
 
 
 
