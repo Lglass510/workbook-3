@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -8,6 +10,8 @@ public class ItemInventory {
 
     public static void displayProducts(String filename) {
 
+        List<Product> products = new ArrayList<>();
+
 
         try {
 
@@ -16,13 +20,34 @@ public class ItemInventory {
          */
             FileInputStream fis = new FileInputStream("src\\main\\resources\\products.csv");
             Scanner sc = new Scanner(fis);
-            String input;
+
+
+
+            //Skip header
+          if (sc.hasNextLine()) {
+              sc.nextLine();
+            }
+
 
             /*Read all data in file and
-            separate the lines and display the input*/
+            separate the lines by | and display the input*/
+
             while (sc.hasNextLine()) {
-                input = sc.nextLine();
-                System.out.println(input);
+                String line = sc.nextLine();
+                String[] fields = line.split("\\|");
+
+                //Parse values
+                if(fields.length == 4) {
+                    String SKU = fields[0];
+                    String name = fields[1];
+                    double price = Double.parseDouble(fields[2]);
+                    String department = fields[3];
+
+
+                    Product product = new Product(SKU, name, price, department);
+                    products.add(product);
+                    System.out.println(product);
+                }
             }
             //closing my scanner
             sc.close();
@@ -38,6 +63,9 @@ public class ItemInventory {
         displayProducts("products.csv");
 
     }
+
+
+
 
 
 
